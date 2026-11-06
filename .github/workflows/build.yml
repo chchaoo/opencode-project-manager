@@ -1,0 +1,31 @@
+name: Windows build
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-build.txt
+      - run: python -m pip install -r requirements-build.txt
+      - run: ./build.ps1
+        shell: pwsh
+      - name: Smoke test GUI executable
+        shell: pwsh
+        run: |
+          $process = Start-Process -FilePath './dist/ProjectRecordManager.exe' -ArgumentList '--smoke-test' -WindowStyle Hidden -PassThru
+          if (-not $process.WaitForExit(30000)) { $process.Kill(); throw 'GUI timed out' }
+          if ($process.ExitCode -ne 0) { throw 'GUI smoke test failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ProjectRecordManager-Windows-x64
+          path: dist/ProjectRecordManager.exe

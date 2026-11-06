@@ -1,0 +1,7 @@
+[
+  "CREATE TABLE `blob` (\n\t`id` text PRIMARY KEY,\n\t`data` blob NOT NULL\n, `touched_at` integer DEFAULT 0 NOT NULL)",
+  "CREATE TABLE `document` (\n\t`key` text PRIMARY KEY,\n\t`value` text NOT NULL\n)",
+  "CREATE TABLE migration (id TEXT PRIMARY KEY, time_completed INTEGER NOT NULL)",
+  "CREATE TABLE \"plugin\" (\n\t`id` text PRIMARY KEY,\n\t`enabled` integer DEFAULT true NOT NULL,\n\t`manifest` text,\n\t`revision` text\n)",
+  "CREATE TABLE `state` (\n\t`name` text NOT NULL,\n\t`key` text NOT NULL,\n\t`value` text NOT NULL,\n\t`updated_at` integer NOT NULL,\n\tCONSTRAINT `state_pk` PRIMARY KEY(`name`, `key`)\n)"
+]

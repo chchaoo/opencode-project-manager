@@ -1,0 +1,20 @@
+# Never publish local user data or build environments.
+backups/
+**/backups/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+undo.json
+__pycache__/
+*.py[cod]
+.venv/
+.build-deps/
+.tools/
+publish_github.py
+build/
+dist/
+release/
+*.spec
+*.zip
+*.exe
